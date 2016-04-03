@@ -65,7 +65,8 @@ while playing:
                     move = loc + 1
                     player = landscape.pop(loc)
                     landscape[i].insert(loc, '-')
-                    landscape[].insert(move, player)
+                    discard = landscape[i].pop(move)
+                    landscape[i].insert(move, player)
                     break
     again = input('Play again? (y/n) ')
     if again == 'y':
