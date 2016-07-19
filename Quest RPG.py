@@ -25,7 +25,7 @@ while playing:
     ^ = Mountain (Must consume 2 Food and 2 Water to get over)
     R = Ruin (Contains Monsters that must be fought with a Sword)
     S = Store (Things can be bought with Gold here)
-    I = Inn ( Endurance and Health will be restored to max here.)
+    I = Inn ( Endurance and Health will be restored to max here. However, takes 5 gold to stay)
 
     You are currently only able to pack 10 food, 10 water, and 75 gold.
     Your quest begins now.''')
@@ -64,7 +64,7 @@ while playing:
             print('You gave up! Game over!')
             break
         if turn.upper() == 'CHECKLANDSCAPE()':
-            print(landscape3)
+            print(landscape2)
         if turn.upper() == 'MOVE(E)':
             for i in range(0, len(landscape) - 1):
                 if landscape[i] == 'O':
@@ -80,7 +80,6 @@ while playing:
                     landscape2 += str(landscape[k])
                 landscape2 += '\n'
             print("You moved 1 space east.")
-            print(landscape2)
             food -= 1
             water -= 1
             endurance -= 1
