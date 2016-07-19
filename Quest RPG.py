@@ -73,6 +73,7 @@ while playing:
                     landscape[loc] = landed_space
                     landed_space = landscape[move]
                     landscape[move] = 'O'
+                    landscape2 = ''
                     break
             for i in range(0, rows):
                 for j in range(0, cols):
@@ -80,6 +81,7 @@ while playing:
                     landscape2 += str(landscape[k])
                 landscape2 += '\n'
             print("You moved 1 space east.")
+            print(landscape2)
             food -= 1
             water -= 1
             endurance -= 1
