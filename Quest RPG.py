@@ -66,13 +66,13 @@ while playing:
         if turn.upper() == 'CHECKLANDSCAPE()':
             print(landscape3)
         if turn.upper() == 'MOVE(E)':
-            for i in landscape:
+            for i in range(0, len(landscape) - 1):
                 if landscape[i] == 'O':
-                    loc = landscape[i]
-                    move = landscape[i + 1]
+                    loc = i
+                    move = i + 1
                     landscape[loc] = landed_space
-                    landed_space = landscape.pop(move)
-                    landscape.insert(move, 'O')
+                    landed_space = landscape[move]
+                    landscape[move] = 'O'
             for i in range(0, rows):
                 for j in range(0, cols):
                     k = j + (rows * i)
@@ -80,7 +80,7 @@ while playing:
                 landscape2 += '\n'
             print("You moved 1 space east.")
             print(landscape2)
-        again = input('Play again? (y/n) ')
+    again = input('Play again? (y/n) ')
     if again == 'y':
         continue
     elif again == 'n':
