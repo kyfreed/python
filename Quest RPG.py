@@ -1,5 +1,8 @@
 playing = True
+rows = 15
+cols = 15
 while playing:
+    landed_space = '-'
     food = 10
     max_food = 10
     water = 10
@@ -9,10 +12,14 @@ while playing:
     endurance = 10
     health = 15
     inventory = []
-    landscape = [['-,-,-,-,-,-,-,-,-,-,-,-,-,-,X'] ,['-,S,-,-,-,-,-,-,-,-,-,-,-,S,-'] ,['-,S,-,-,-,-,-,R,-,-,-,-,-,S,-'] ,['-,-,-,-,-,-,-,^,-,-,-,-,-,^,-'] ,['-,-,-,-,-,-,-,S,-,-,-,-,S,-,-'] ,['-,-,I,-,-,I,-,-,-,-,-,R,-,-,-'] ,['^,^,^,^,^,^,^,^,^,^,^,^,^,^,^'] ,['-,-,^,-,-,^,-,-,-,-,^,-,-,-,-'] ,['-,-,S,-,-,S,-,S,-,-,S,S,-,-,-'] ,['R,R,R,R,R,R,R,R,R,R,R,R,R,R,R'] ,['-,-,I,-,-,-,I,-,-,-,-,-,I,-,-'] ,['^,-,S,-,-,S,-,-,-,S,-,^,-,-,-'] ,['-,S,-,S,-,-,S,-,-,-,-,S,-,-,-'] ,['-,I,-,-,^,^,-,I,-,-,-,-,-,^,-'] ,['O,-,-,-,-,-,-,-,-,-,-,-,-,-,-']]
-    landscape2 = "\n".join(["".join(sublst) for sublst in landscape])
-    landscape3 = landscape2.replace(',','')
-    print('''You have found a treasure map.\n''' + landscape3 +'''
+    landscape = ['-','-','-','-','-','-','-','-','-','-','-','-','-','-','X','-','S','-','-','-','-','-','-','-','-','-','-','-','S','-','-','S','-','-','-','-','-','R','-','-','-','-','-','S','-','-','-','-','-','-','-','-','^','-','-','-','-','-','^','-','-','-','-','-','-','-','-','S','-','-','-','-','S','-','-','-','-','I','-','-','I','-','-','-','-','-','R','-','-','-','^','^','^','^','^','^','^','^','^','^','^','^','^','^','^','-','-','^','-','-','^','-','-','-','-','^','-','-','-','-','-','-','S','-','-','S','-','S','-','-','S','S','-','-','-','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','-','-','I','-','-','-','I','-','-','-','-','-','I','-','-','^','-','S','-','-','S','-','-','-','S','-','^','-','-','-','-','S','-','S','-','-','S','-','-','-','-','S','-','-','-','-','I','-','-','^','^','-','I','-','-','-','-','-','^','-','O','-','-','-','-','-','-','-','-','-','-','-','-','-','-']
+    landscape2 = ''
+    for i in range(0, rows):
+        for j in range(0, cols):
+            k = j + (rows * i)
+            landscape2 += str(landscape[k])
+        landscape2 += '\n'
+    print('''You have found a treasure map.\n''' + landscape2 +'''
     O = You are here
     X = Treasure
     ^ = Mountain (Must consume 2 Food and 2 Water to get over)
@@ -60,15 +67,20 @@ while playing:
             print(landscape3)
         if turn.upper() == 'MOVE(E)':
             for i in landscape:
-                if 'O' in landscape[i]:
-                    loc = landscape[i].index('O')
-                    move = loc + 1
-                    player = landscape.pop(loc)
-                    landscape[i].insert(loc, '-')
-                    discard = landscape[i].pop(move)
-                    landscape[i].insert(move, player)
-                    break
-    again = input('Play again? (y/n) ')
+                if landscape[i] == 'O':
+                    loc = landscape[i]
+                    move = landscape[i + 1]
+                    landscape[loc] = landed_space
+                    landed_space = landscape.pop(move)
+                    landscape.insert(move, 'O')
+            for i in range(0, rows):
+                for j in range(0, cols):
+                    k = j + (rows * i)
+                    landscape2 += str(landscape[k])
+                landscape2 += '\n'
+            print("You moved 1 space east.")
+            print(landscape2)
+        again = input('Play again? (y/n) ')
     if again == 'y':
         continue
     elif again == 'n':
