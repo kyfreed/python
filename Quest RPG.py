@@ -38,7 +38,7 @@ while playing:
             print('You have no water! Game over!')
             break
         if endurance == 0:
-            print('You can\'t go any farther! Game over!')
+            print('You collapsed with exhaustion! Game over!')
             break
         if health == 0:
             print('You died! Game over!')
@@ -73,6 +73,7 @@ while playing:
                     landscape[loc] = landed_space
                     landed_space = landscape[move]
                     landscape[move] = 'O'
+                    break
             for i in range(0, rows):
                 for j in range(0, cols):
                     k = j + (rows * i)
@@ -80,6 +81,9 @@ while playing:
                 landscape2 += '\n'
             print("You moved 1 space east.")
             print(landscape2)
+            food -= 1
+            water -= 1
+            endurance -= 1
     again = input('Play again? (y/n) ')
     if again == 'y':
         continue
