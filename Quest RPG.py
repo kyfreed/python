@@ -9,8 +9,8 @@ while playing:
     max_food = 10
     water = 10
     max_water = 10
-    gold = 125
-    max_gold = 125
+    gold = 100
+    max_gold = 100
     endurance = 10
     max_endurance = 10
     health = 15
@@ -117,7 +117,7 @@ while playing:
                 if options[i] == choice.lower():
                     chosenItem = options[i]
             if choice.lower() == 'help':
-                print('''To buy something, type the name of it, or type 'leave' to leave the store. Use check_stats to check stats.
+                print('''To buy something, type the name of it, or type 'leave' to leave the store. Type \'stats\' to check stats.
 Canteens let you carry more water.
 Lunchboxes let you carry more food.
 Big Bags let you carry more gold.''')
@@ -203,7 +203,7 @@ Big Bags let you carry more gold.''')
                 max_health += 3
                 health = max_health
                 continue
-            if choice.lower() == 'check_stats':
+            if choice.lower() == 'stats':
                 print('Food: ' + str(food) + '\n' + 'Water: ' + str(water) + '\n' + 'Gold: ' + str(gold))
     def landedOnInn():
         global max_gold
@@ -333,7 +333,7 @@ Big Bags let you carry more gold.''')
     I = Inn (Endurance and Health will be restored to max here. However, takes 5 gold to stay)
     M = Magic House (You can upgrade your sword here)
 
-    You are currently only able to pack 10 food, 10 water, and 125 gold.
+    You are currently only able to pack 10 food, 10 water, and 100 gold.
     Your quest begins now.''')
 
     while True:
