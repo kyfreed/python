@@ -523,23 +523,3 @@ Big Bags let you carry more gold.''')
         continue
     elif again == 'n':
         playing = False
-
-            
-            
-                      
-        
-    
-                
-    
-    
-        
-        
-    
-            
-        
-    
-
-
-
-
-    
