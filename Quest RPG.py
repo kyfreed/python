@@ -13,10 +13,11 @@ while playing:
     max_gold = 75
     endurance = 10
     max_endurance = 10
-    health = 9
+    health = 15
     max_health = 15
-    inventory = ['sword', 'shield']
+    inventory = []
     swordUpgrades = 0
+    freeInnGold = True
     landscape = ['-','-','-','-','-','-','-','-','-','-','-','-','-','-','X','-','S','-','-','-','-','-','-','-','-','-','-','-','S','-','-','S','-','-','-','-','-','R','-','M','-','-','-','S','-','-','-','-','-','-','-','-','^','-','-','-','-','-','^','-','-','-','-','-','-','-','-','S','-','-','-','-','S','-','-','-','-','I','-','-','I','-','-','-','-','-','R','-','-','-','^','^','^','^','^','^','^','^','^','^','^','^','^','^','^','-','-','^','-','-','^','-','-','-','-','^','-','-','-','-','-','-','S','-','-','S','-','S','-','-','S','S','-','-','-','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','M','-','I','-','-','-','I','-','-','M','-','-','I','-','-','^','M','S','-','-','S','-','M','-','S','-','^','-','-','-','-','S','-','S','-','-','S','-','-','-','-','S','-','-','-','-','I','-','-','^','^','-','I','-','-','-','-','-','^','-','O','-','-','-','-','-','-','-','-','-','-','-','-','-','-']
     landscape2 = ''
     for i in range(0, rows):
@@ -193,6 +194,7 @@ Big Bags let you carry more gold.''')
                 inventory.append('sleeping bag')
                 max_endurance += 15
                 print('You bought a sleeping bag. Your max endurance has been increased by 15!')
+                endurance = max_endurance
                 continue
             if chosenItem == 'health container':
                 if gold < 25:
@@ -211,19 +213,25 @@ Big Bags let you carry more gold.''')
         global max_endurance
         global health
         global endurance
+        global freeInnGold
         print('You stayed at an inn. Your endurance and health have been restored to max.')
-        if randint(0, 1) == 0:
+        if freeInnGold:
             print('The staff have given you gold to help you on your way!')
-            if max_gold - gold < 50:
-                gold = max_gold
-            else:
-                gold += 50
+            gold = max_gold
+        else:
+            if randint(0, 9) == 0:
+                print('The staff have given you gold to help you on your way!')
+                if max_gold - gold < 50:
+                    gold = max_gold
+                else:
+                    gold += 50
         endurance = max_endurance
         health = max_health
         if randint(0, 9) == 7:
             print('You also found a health container. Your max health has been increased by 3 and replenished!')
             max_health += 3
             health = max_health
+            freeInnGold = False
         
     def landedOnMagic():
         global swordUpgrades
