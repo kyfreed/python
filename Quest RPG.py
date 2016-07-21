@@ -9,8 +9,8 @@ while playing:
     max_food = 10
     water = 10
     max_water = 10
-    gold = 75
-    max_gold = 75
+    gold = 125
+    max_gold = 125
     endurance = 10
     max_endurance = 10
     health = 15
@@ -339,7 +339,7 @@ Big Bags let you carry more gold.''')
     I = Inn (Endurance and Health will be restored to max here. However, takes 5 gold to stay)
     M = Magic House (You can upgrade your sword here)
 
-    You are currently only able to pack 10 food, 10 water, and 75 gold.
+    You are currently only able to pack 10 food, 10 water, and 125 gold.
     Your quest begins now.''')
 
     while True:
