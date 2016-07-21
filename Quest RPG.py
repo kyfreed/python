@@ -1,4 +1,5 @@
 from random import randint
+from time import sleep
 playing = True
 rows = 15
 cols = 15
@@ -12,9 +13,9 @@ while playing:
     max_gold = 75
     endurance = 10
     max_endurance = 10
-    health = 15
+    health = 9
     max_health = 15
-    inventory = []
+    inventory = ['sword', 'shield']
     swordUpgrades = 0
     landscape = ['-','-','-','-','-','-','-','-','-','-','-','-','-','-','X','-','S','-','-','-','-','-','-','-','-','-','-','-','S','-','-','S','-','-','-','-','-','R','-','M','-','-','-','S','-','-','-','-','-','-','-','-','^','-','-','-','-','-','^','-','-','-','-','-','-','-','-','S','-','-','-','-','S','-','-','-','-','I','-','-','I','-','-','-','-','-','R','-','-','-','^','^','^','^','^','^','^','^','^','^','^','^','^','^','^','-','-','^','-','-','^','-','-','-','-','^','-','-','-','-','-','-','S','-','-','S','-','S','-','-','S','S','-','-','-','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','M','-','I','-','-','-','I','-','-','M','-','-','I','-','-','^','M','S','-','-','S','-','M','-','S','-','^','-','-','-','-','S','-','S','-','-','S','-','-','-','-','S','-','-','-','-','I','-','-','^','^','-','I','-','-','-','-','-','^','-','O','-','-','-','-','-','-','-','-','-','-','-','-','-','-']
     landscape2 = ''
@@ -33,6 +34,8 @@ while playing:
         global inventory
         global max_endurance
         global endurance
+        global max_health
+        global health
         food -= 1
         water -= 1
         endurance -= 1
@@ -105,6 +108,8 @@ while playing:
             if sleepingBagAvailable:
                 options.append('sleeping bag')
                 optionDisplay += '\n Sleeping Bag: 25 Gold'
+            options.append('health container')
+            optionDisplay += '\n Health Container: 25 Gold'
             print('Here\'s what\'s available:' + optionDisplay)
             choice = input('What would you like? Type \'help\' for help. ')
             chosenItem = ''
@@ -112,7 +117,7 @@ while playing:
                 if options[i] == choice.lower():
                     chosenItem = options[i]
             if choice.lower() == 'help':
-                print('''To buy something, type the name of it, or type 'leave' to leave the store. Use checkstats() to check stats.
+                print('''To buy something, type the name of it, or type 'leave' to leave the store. Use check_stats to check stats.
 Canteens let you carry more water.
 Lunchboxes let you carry more food.
 Big Bags let you carry more gold.''')
@@ -142,6 +147,7 @@ Big Bags let you carry more gold.''')
                 gold -= 25
                 max_water += 15
                 print('You bought a canteen. You can hold 15 more water!')
+                water = max_water
                 continue
             if chosenItem == 'lunchbox':
                 if gold < 25:
@@ -151,6 +157,7 @@ Big Bags let you carry more gold.''')
                 gold -= 25
                 max_food += 15
                 print('You bought a lunchbox. You can hold 15 more food!')
+                food = max_food
                 continue
             if chosenItem == 'big bag':
                 if gold < 50:
@@ -160,6 +167,7 @@ Big Bags let you carry more gold.''')
                 gold -= 50
                 max_gold += 50
                 print('You bought a big bag. You can hold 50 more gold!')
+                gold = max_gold
                 continue
             if chosenItem == 'sword':
                 if gold < 50:
@@ -186,7 +194,15 @@ Big Bags let you carry more gold.''')
                 max_endurance += 15
                 print('You bought a sleeping bag. Your max endurance has been increased by 15!')
                 continue
-            if choice.lower() == 'checkstats()':
+            if chosenItem == 'health container':
+                if gold < 25:
+                    print('You don\'t have enough gold.')
+                    continue
+                print('You bought a health container. Your max health has been increased!')
+                max_health += 3
+                health = max_health
+                continue
+            if choice.lower() == 'check_stats':
                 print('Food: ' + str(food) + '\n' + 'Water: ' + str(water) + '\n' + 'Gold: ' + str(gold))
     def landedOnInn():
         global max_gold
@@ -195,10 +211,9 @@ Big Bags let you carry more gold.''')
         global max_endurance
         global health
         global endurance
-        global randint
         print('You stayed at an inn. Your endurance and health have been restored to max.')
-        if randint(0, 2) == 1:
-            print('The staff have given you golden to help you on your way!')
+        if randint(0, 1) == 0:
+            print('The staff have given you gold to help you on your way!')
             if max_gold - gold < 50:
                 gold = max_gold
             else:
@@ -229,6 +244,7 @@ Big Bags let you carry more gold.''')
                     return
                 gold -= 25
                 swordUpgrades = 1
+                print('You bought the Basic Sword Upgrade!')
                 return
             else:
                 return
@@ -240,6 +256,7 @@ Big Bags let you carry more gold.''')
                     return
                 gold -= 50
                 swordUpgrades = 2
+                print('You bought the Intermediate Sword Upgrade!')
                 return
             else:
                 return
@@ -251,10 +268,59 @@ Big Bags let you carry more gold.''')
                     return
                 gold -= 75
                 swordUpgrades = 3
+                print('You bought the Advanced Sword Upgrade!')
                 return
         if swordUpgrades == 3:
             print('There are no more sword upgrades available.')
             return
+    def landedOnRuins():
+        global health
+        global swordUpgrades
+        global inventory
+        global gold
+        global max_gold
+        hasASword = False
+        hasAShield = False
+        for i in range(0, len(inventory)):
+            if inventory[i] == 'sword':
+                hasASword = True
+        for i in range(0, len(inventory)):
+            if inventory[i] == 'shield':
+                hasAShield = True
+        if hasASword == False:
+            print('You don\'t have a sword! You\'re doomed!')
+            return 'game over'
+        if hasAShield == False:
+            print('You don\'t have a shield! You\'re doomed!')
+            return 'game over'
+        monsters = randint(3, 20)
+        print('There are ' + str(monsters) + ' monsters in this ruin. You must fight them if you are to survive!')
+        while health > 0 and monsters > 0:
+            hitChance = 2 + swordUpgrades
+            if randint(0, hitChance - 1) == 0:
+                print('The monsters attack!')
+                health -= 3
+            else:
+                print('You attack!')
+                if monsters < swordUpgrades:
+                    monsters = 0
+                else:
+                    monsters -= 1 + swordUpgrades
+            sleep(2)
+        if health == 0:
+            print('You died!')
+            return 'game over'
+        else:
+            print('You find a chest before you.')
+            if randint(0, 999) != 11:
+                print('You found 100 gold in the chest!')
+                if max_gold - gold < 100:
+                    print('However, you can only carry ' + str(max_gold - gold) + ' more gold.')
+                    gold = max_gold
+                else:
+                    gold += 100
+            else:
+                print('It has nothing in it!')
                 
     print('''You have found a treasure map.\n''' + landscape2 +'''
     O = You are here
@@ -281,30 +347,30 @@ Big Bags let you carry more gold.''')
         if health == 0:
             print('You died! Game over!')
             break
-        turn = input('Enter your choice. Type \'help()\' for help ')
-        if turn.upper() == 'HELP()':
-            print('''checkstats(): Check statistics
+        turn = input('Enter your choice. Type \'help\' for help ')
+        if turn.upper() == 'HELP':
+            print('''check_stats: Check statistics
     move(dir): Move one space in direction dir
     (acceptable parameters are n, e, s, and w)
-    rest(): Rest for one turn
+    rest: Rest for one turn
     (You will recover 1 Endurance but 1 Food and 1 Water will still be consumed)
-    checklandscape(): Check landscape
-    help(): Display this menu
-    giveup(): Give up''')
-        if turn.upper() == 'CHECKSTATS()':
+    check_landscape: Check landscape
+    help: Display this menu
+    give_up: Give up''')
+        if turn.upper() == 'CHECK_STATS':
             print('Food: ' + str(food) + '\nWater: ' + str(water) + '\nGold: ' + str(gold) + '\nEndurance: ' + str(endurance) + '\nHealth: ' + str(health))
-        if turn.upper() == 'REST()':
+        if turn.upper() == 'REST':
             food -= 1
             water -= 1
             endurance += 1
             print('You rested for 1 turn.')
-        if turn.upper() == 'GIVEUP()':
+        if turn.upper() == 'GIVE_UP':
             print('You gave up! Game over!')
             break
-        if turn.upper() == 'CHECKLANDSCAPE()':
+        if turn.upper() == 'CHECK_LANDSCAPE':
             print(landscape2)
         if turn.upper() == 'MOVE(E)':
-            for i in range(0, len(landscape) - 1):
+            for i in range(0, len(landscape)):
                 if landscape[i] == 'O':
                     loc = i
                     move = i + 1
@@ -330,12 +396,19 @@ Big Bags let you carry more gold.''')
                 endurance -= 3
             elif landed_space == 'M':
                 landedOnMagic()
+            elif landed_space == 'R':
+                outcome = landedOnRuins()
+                if outcome == 'game over':
+                    break
+            elif landed_space == 'X':
+                print('You found the treasure! You win!')
+                break
             else:
                 food -= 1
                 water -= 1
                 endurance -= 1
         if turn.upper() == 'MOVE(N)':
-            for i in range(0, len(landscape) - 1):
+            for i in range(0, len(landscape)):
                 if landscape[i] == 'O':
                     loc = i
                     move = i - 15
@@ -361,10 +434,89 @@ Big Bags let you carry more gold.''')
                 endurance -= 3
             elif landed_space == 'M':
                 landedOnMagic()
+            elif landed_space == 'R':
+                outcome = landedOnRuins()
+                if outcome == 'game over':
+                    break
+            elif landed_space == 'X':
+                print('You found the treasure! You win!')
+                break
             else:
                 food -= 1
                 water -= 1
                 endurance -= 1
+        if turn.upper() == 'MOVE(W)':
+            for i in range(0, len(landscape)):
+                if landscape[i] == 'O':
+                    loc = i
+                    move = i - 1
+                    landscape[loc] = landed_space
+                    landed_space = landscape[move]
+                    landscape[move] = 'O'
+                    landscape2 = ''
+                    break
+            for i in range(0, rows):
+                for j in range(0, cols):
+                    k = j + (rows * i)
+                    landscape2 += str(landscape[k])
+                landscape2 += '\n'
+            print("You moved 1 space west.")
+            print(landscape2)
+            if landed_space == 'S':
+                landedOnStore()
+            elif landed_space == 'I':
+                landedOnInn()
+            elif landed_space == '^':
+                food -= 2
+                water-= 2
+                endurance -= 3
+            elif landed_space == 'M':
+                landedOnMagic()
+            elif landed_space == 'R':
+                outcome = landedOnRuins()
+                if outcome == 'game over':
+                    break
+            else:
+                food -= 1
+                water -= 1
+                endurance -= 1
+        if turn.upper() == 'MOVE(S)':
+            for i in range(0, len(landscape)):
+                if landscape[i] == 'O':
+                    loc = i
+                    move = i + 15
+                    landscape[loc] = landed_space
+                    landed_space = landscape[move]
+                    landscape[move] = 'O'
+                    landscape2 = ''
+                    break
+            for i in range(0, rows):
+                for j in range(0, cols):
+                    k = j + (rows * i)
+                    landscape2 += str(landscape[k])
+                landscape2 += '\n'
+            print("You moved 1 space south.")
+            print(landscape2)
+            if landed_space == 'S':
+                landedOnStore()
+            elif landed_space == 'I':
+                landedOnInn()
+            elif landed_space == '^':
+                food -= 2
+                water-= 2
+                endurance -= 3
+            elif landed_space == 'M':
+                landedOnMagic()
+            elif landed_space == 'R':
+                outcome = landedOnRuins()
+                if outcome == 'game over':
+                    break
+            else:
+                food -= 1
+                water -= 1
+                endurance -= 1
+            
+            
     again = input('Play again? (y/n) ')
     if again == 'y':
         continue
