@@ -17,7 +17,6 @@ while playing:
     max_health = 15
     inventory = []
     swordUpgrades = 0
-    freeInnGold = True
     landscape = ['-','-','-','-','-','-','-','-','-','-','-','-','-','-','X','-','S','-','-','-','-','-','-','-','-','-','-','-','S','-','-','S','-','-','-','-','-','R','-','M','-','-','-','S','-','-','-','-','-','-','-','-','^','-','-','-','-','-','^','-','-','-','-','-','-','-','-','S','-','-','-','-','S','-','-','-','-','I','-','-','I','-','-','-','-','-','R','-','-','-','^','^','^','^','^','^','^','^','^','^','^','^','^','^','^','-','-','^','-','-','^','-','-','-','-','^','-','-','-','-','-','-','S','-','-','S','-','S','-','-','S','S','-','-','-','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','M','-','I','-','-','-','I','-','-','M','-','-','I','-','-','^','M','S','-','-','S','-','M','-','S','-','^','-','-','-','-','S','-','S','-','-','S','-','-','-','-','S','-','-','-','-','I','-','-','^','^','-','I','-','-','-','-','-','^','-','O','-','-','-','-','-','-','-','-','-','-','-','-','-','-']
     landscape2 = ''
     for i in range(0, rows):
@@ -213,18 +212,7 @@ Big Bags let you carry more gold.''')
         global max_endurance
         global health
         global endurance
-        global freeInnGold
         print('You stayed at an inn. Your endurance and health have been restored to max.')
-        if freeInnGold:
-            print('The staff have given you gold to help you on your way!')
-            gold = max_gold
-        else:
-            if randint(0, 9) == 0:
-                print('The staff have given you gold to help you on your way!')
-                if max_gold - gold < 50:
-                    gold = max_gold
-                else:
-                    gold += 50
         endurance = max_endurance
         health = max_health
         if randint(0, 9) == 7:
