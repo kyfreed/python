@@ -226,45 +226,51 @@ Big Bags let you carry more gold.''')
         global inventory
         global gold
         hasASword = False
+        hasAShield = False
         for i in range(0, len(inventory)):
             if inventory[i] == 'sword':
                 hasASword = True
+            elif inventory[i] == 'shield':
+                hasAShield = True
         if hasASword == False:
             print('You don\'t have a sword? You have no business here! Begone with you!')
             return
+        if hasAShield == False:
+            print('You don\'t have a shield? You have no business here! Begone with you!')
+            return
         if swordUpgrades == 0:
-            swordBuy = input('The Basic Sword Upgrade is available for 25 gold. Would you like to buy?(y/n) ')
+            swordBuy = input('The Basic Sword/Shield Upgrade is available for 25 gold. Would you like to buy?(y/n) ')
             if swordBuy.lower() == 'y':
                 if gold < 25:
                     print('You don\'t have enough gold.')
                     return
                 gold -= 25
                 swordUpgrades = 1
-                print('You bought the Basic Sword Upgrade!')
+                print('You bought the Basic Sword/Shield Upgrade!')
                 return
             else:
                 return
         if swordUpgrades == 1:
-            swordBuy = input('The Intermediate Sword Upgrade is available for 50 gold. Would you like to buy?(y/n) ')
+            swordBuy = input('The Intermediate Sword/Shield Upgrade is available for 50 gold. Would you like to buy?(y/n) ')
             if swordBuy.lower() ==  'y':
                 if gold < 50:
                     print('You don\'t have enough gold.')
                     return
                 gold -= 50
                 swordUpgrades = 2
-                print('You bought the Intermediate Sword Upgrade!')
+                print('You bought the Intermediate Sword/Shield Upgrade!')
                 return
             else:
                 return
         if swordUpgrades == 2:
-            swordBuy= input('The Advanced Sword Upgrade is available for 75 gold. Would you like to buy?(y/n) ')
+            swordBuy= input('The Advanced Sword/Shield Upgrade is available for 75 gold. Would you like to buy?(y/n) ')
             if swordBuy.lower() == 'y':
                 if gold < 75:
                     print('You don\'t have enough gold.')
                     return
                 gold -= 75
                 swordUpgrades = 3
-                print('You bought the Advanced Sword Upgrade!')
+                print('You bought the Advanced Sword/Shield Upgrade!')
                 return
         if swordUpgrades == 3:
             print('There are no more sword upgrades available.')
@@ -345,15 +351,14 @@ Big Bags let you carry more gold.''')
             break
         turn = input('Enter your choice. Type \'help\' for help ')
         if turn.upper() == 'HELP':
-            print('''check_stats: Check statistics
-    move(dir): Move one space in direction dir
-    (acceptable parameters are n, e, s, and w)
+            print('''stats: Check statistics
+    n, s, e, w: Move one space in direction specified
     rest: Rest for one turn
     (You will recover 1 Endurance but 1 Food and 1 Water will still be consumed)
-    check_landscape: Check landscape
+    map: Show map
     help: Display this menu
     give_up: Give up''')
-        if turn.upper() == 'CHECK_STATS':
+        if turn.upper() == 'STATS':
             print('Food: ' + str(food) + '\nWater: ' + str(water) + '\nGold: ' + str(gold) + '\nEndurance: ' + str(endurance) + '\nHealth: ' + str(health))
         if turn.upper() == 'REST':
             food -= 1
@@ -363,9 +368,9 @@ Big Bags let you carry more gold.''')
         if turn.upper() == 'GIVE_UP':
             print('You gave up! Game over!')
             break
-        if turn.upper() == 'CHECK_LANDSCAPE':
+        if turn.upper() == 'MAP':
             print(landscape2)
-        if turn.upper() == 'MOVE(E)':
+        if turn.upper() == 'E':
             for i in range(0, len(landscape)):
                 if landscape[i] == 'O':
                     loc = i
@@ -403,7 +408,7 @@ Big Bags let you carry more gold.''')
                 food -= 1
                 water -= 1
                 endurance -= 1
-        if turn.upper() == 'MOVE(N)':
+        if turn.upper() == 'N':
             for i in range(0, len(landscape)):
                 if landscape[i] == 'O':
                     loc = i
@@ -441,7 +446,7 @@ Big Bags let you carry more gold.''')
                 food -= 1
                 water -= 1
                 endurance -= 1
-        if turn.upper() == 'MOVE(W)':
+        if turn.upper() == 'W':
             for i in range(0, len(landscape)):
                 if landscape[i] == 'O':
                     loc = i
@@ -476,7 +481,7 @@ Big Bags let you carry more gold.''')
                 food -= 1
                 water -= 1
                 endurance -= 1
-        if turn.upper() == 'MOVE(S)':
+        if turn.upper() == 'S':
             for i in range(0, len(landscape)):
                 if landscape[i] == 'O':
                     loc = i
